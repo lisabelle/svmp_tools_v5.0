@@ -15,9 +15,10 @@ csv2pt.py
 Convert a CSV file to a point feature class using pandas and NumPy
 
 This script was designed and developed by Allison Bailey, Sound GIS.
+All updates after June 2018 by Lisa Ferrier.
 Developed in ArcGIS Pro provided Python 3.7.11, NumPy 1.20.1, Pandas 1.2.3
 ArcGIS Pro 2.9.5
-6/30/2023
+7/12/2023
 """
 
 __version__= '5.0'
@@ -350,18 +351,22 @@ class CsvSource(object):
     @property
     def dataframe(self):
         if self.valid:
+
+            # usecols=self.columns
+            print(self.columns)
             _dataframe = pd.read_csv(self.file_path,
-                            usecols=self.columns,
-                            memory_map=True,
-                            converters={
-                                sourceLatCol: dm2dd,
-                                sourceLonCol: dm2dd,
-                            },
-                            parse_dates={
-                                datetimeCol: [sourceDateCol, sourceTimeCol]
-                            },
-                            keep_date_col=True
-                        )
+                                     memory_map=True,
+                                     converters={
+                                         sourceLatCol: dm2dd,
+                                         sourceLonCol: dm2dd,
+                                     },
+                                     skipinitialspace=True,
+                                     parse_dates={
+                                         datetimeCol: [sourceDateCol, sourceTimeCol]
+                                     },
+                                     keep_date_col=True
+                                     )
+            print(_dataframe.columns)
             return _dataframe
         else:
             return None
@@ -421,11 +426,6 @@ class CsvData(object):
         for veg in self.veg_columns:
             _veg_dtype.append((veg,'<i4'))
         return _veg_dtype
-
-    @property
-    def df_col_order(self):
-
-        return self.df[_col_order]
 
     @property
     def nparray(self):
@@ -558,7 +558,7 @@ class CsvData(object):
     @property
     def transect_video0(self):
         # Transects where max of video column < 1
-        df_max = self.df.groupby(tranCol)[videoCol].max()
+        # df_max = self.df.groupby(tranCol)[videoCol].max()
         grouped = self.df.groupby(tranCol)
         df_max = grouped.filter(lambda x: x[videoCol].sum() == 0)
 
@@ -646,7 +646,7 @@ class PointFC(object):
         arcpy.Delete_management(temp_fc)
 
 
-class VegCodes( object ):
+class VegCodes(object):
     """ Represents the vegetation codes in the database
 
     Properties:

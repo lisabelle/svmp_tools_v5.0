@@ -74,12 +74,12 @@ class TransectDatatoPtFC(object):
             direction="Input"
         )
 
-        # Default values  -- Change or remove these for DNR paths
-        # in_dir.value = "Y:/projects/dnr_svmp2016/data/2014_test/site_folders"
-        # sites_file.value = os.path.join("Y:/projects/dnr_svmp2016/data/2014_test", "sites2process_all.txt")
-        # vegcode_table.value = "Y:/projects/dnr_svmp2016/db/SVMP_2000_2015_DB.v4_20170109/SVMP_DB_v4_20170109.mdb/veg_codes"
-        # out_gdb.value = "Y:/projects/dnr_svmp2016/data/2014_test/2014_test_pgdb.mdb"
-        # err_dir.value = "Y:/projects/dnr_svmp2016/data/2014_test/site_folders"
+        # Default values  -- Change or remove as needed
+        # in_dir.value = 'C:/Users/lfer490/Documents/projects/svmp/2021_2022_site_processing/field_data/2022/site_folders/'
+        # sites_file.value = os.path.join(in_dir.value, "sites2process_all.txt")
+        # vegcode_table.value = "C:/Users/lfer490/Documents/svmp_data/masterSVMPdb_20230502.gdb/veg_codes"
+        # out_gdb.value = "C:/Users/lfer490/Documents/svmp_data/transect_pt_data_2022.gdb"
+        # err_dir.value = "C:/Users/lfer490/Documents/svmp_data/transect_pt_logs/"
 
         params = [in_dir, sites_file, vegcode_table, out_gdb, err_dir]
 
@@ -105,7 +105,7 @@ class TransectDatatoPtFC(object):
             # table = arcpy.Describe(vegcode_path).baseName
             field_names = [f.name for f in arcpy.ListFields(vegcode_table)]
             if vegcode_field not in field_names:
-                errtext = "[SVMP ERROR]: The selected table, {0}, has no field {1}.".format(vegcode_table, vegcode_field)
+                errtext = f"[SVMP ERROR]: The selected table, {vegcode_table}, has no field {vegcode_field}."
                 errtext += "\nChoose a different table."
                 parameters[2].setErrorMessage(errtext)
         return

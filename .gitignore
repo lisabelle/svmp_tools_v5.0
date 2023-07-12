@@ -1,5 +1,8 @@
 .idea
 .pyc
-.xml
-_pycache_
+*.xml
+__pycache__
 .git
+.cfg
+.venv
+*.pyt.xml
