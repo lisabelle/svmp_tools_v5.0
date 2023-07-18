@@ -476,7 +476,7 @@ class CsvData(object):
     def _calc_nativesg(self):
         # Calculate the nativesg column based on values in the individual seagrass observations
         # Rows with any NULLs for native seagrass types
-        df_null = (self.df[self.nativesg_columns] == NULL_VEG).any(axis=1)
+        df_null = (self.df[self.nativesg_columns] == NULL_VEG).any(axis=1).astype('int64')
         # Rows with any PRESENT for native seagrass types
         df_present = (self.df[self.nativesg_columns] == 1).any(axis=1)
         # Rows with all ABSENT for native seagrass types

@@ -346,7 +346,6 @@ class TransectAndSiteStatistics(object):
     def execute(self, parameters, messages):
         """The source code of the tool."""
         import statsdb
-        reload(statsdb)  # Remove this after development
 
         # Input parameter 1:  Geodatabase with individual transect point data -- REQUIRED
         transect_gdb = parameters[0].valueAsText  #
